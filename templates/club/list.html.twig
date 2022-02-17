@@ -1,0 +1,33 @@
+{% if mesformations is empty %}
+<h1>Tableau vide</h1>
+{% else %}
+<ul>
+{% for f in mesformations %}
+  <li>  {{ f.ref }} ** {{ f.Titre | upper  }}
+  {% if f.nb_participants == 0 %}
+       <button>participer</button>
+  {% endif %}</li>
+{% endfor %}
+</ul>
+{% endif %}
+Le nombre de formations est : {{ mesformations | length }}
+{# question 5 #}
+<ul>
+  {% set nb=0 %}
+  {% set total=0 %}
+  {% set titreF="" %}
+  {% for f in mesformations %}
+    {% set total=total + f.nb_participants %}
+    {% set nb = max(nb,f.nb_participants) %}
+    {% if nb == f.nb_participants %}
+      {% set titreF = f.Titre %}
+    {% endif %}
+    {% if f.Description == "formation theorique" %}
+    <li>  {{ f.Titre }} </li>
+    {% endif %}
+  {% endfor %}
+</ul>
+{# question 6 #}
+Titre Formation: {{ titreF }} <br>
+{# question 7 #}
+le nombre total est : {{ total }}
