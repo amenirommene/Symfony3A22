@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ClassroomRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -29,6 +31,16 @@ class Classroom
      * @ORM\Column(type="string", length=50)
      */
     private $nom2;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Student::class, mappedBy="classroom_id")
+     */
+    private $students;
+
+    public function __construct()
+    {
+        $this->students = new ArrayCollection();
+    }
 
     /**
      * @return mixed
@@ -75,6 +87,36 @@ class Classroom
     public function setNom(string $nom): self
     {
         $this->nom = $nom;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Student[]
+     */
+    public function getStudents(): Collection
+    {
+        return $this->students;
+    }
+
+    public function addStudent(Student $student): self
+    {
+        if (!$this->students->contains($student)) {
+            $this->students[] = $student;
+            $student->setClassroomId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStudent(Student $student): self
+    {
+        if ($this->students->removeElement($student)) {
+            // set the owning side to null (unless already changed)
+            if ($student->getClassroomId() === $this) {
+                $student->setClassroomId(null);
+            }
+        }
 
         return $this;
     }
