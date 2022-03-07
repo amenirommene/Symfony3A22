@@ -1,0 +1,12 @@
+<h1>Bonjpour</h1>
+{% if listSt|length == 0 %}
+    <h1>Aucune données</h1>
+{% else %}
+    <ul>
+        {% for c in listSt %}
+        <li>{{ c.nsc }} ** {{ c.email }} ** {{ c.classroomId.nom}}
+
+            {% endfor %}
+    </ul>
+
+{% endif %}

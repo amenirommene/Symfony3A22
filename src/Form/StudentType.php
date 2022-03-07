@@ -20,8 +20,8 @@ class StudentType extends AbstractType
             ->add('classroom_id', EntityType::class, [
                 'class'=>Classroom::class,
                 'choice_label'=>'nom',
-                /*'multiple'=>false,
-                'expanded'=>true,*/
+                'multiple'=>false,
+                'expanded'=>false,
             ])
             ->add('Add', SubmitType::class)
         ;

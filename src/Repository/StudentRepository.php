@@ -19,22 +19,29 @@ class StudentRepository extends ServiceEntityRepository
         parent::__construct($registry, Student::class);
     }
 
-    // /**
-    //  * @return Student[] Returns an array of Student objects
-    //  */
-    /*
-    public function findByExampleField($value)
+     /**
+      * @return Student[] Returns an array of Student objects
+      */
+
+    public function getStudentsByEmails($value)
     {
         return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
+            ->orderBy('s.email', $value)
+           // ->setMaxResults(10)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
+
+    public function getStudentsByEmailsDQL($value)
+    {
+        $em=$this->getEntityManager();
+        $query=$em->createQuery("Select s from App\Entity\Student s ORDER BY s.email $value");
+
+          return  $query->getResult()
+            ;
+    }
+
 
     /*
     public function findOneBySomeField($value): ?Student
